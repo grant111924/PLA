@@ -59,7 +59,7 @@ def getErrorRate(w,dataList):
         compute=sign(dot(w,data[0]))
         if fact != compute:
             error+=1
-    return error/n
+    return float(error)/n
 
 def pocket_pla(dataList,normalW,pocketW,Finish):
      itertion=1#修正錯誤次數

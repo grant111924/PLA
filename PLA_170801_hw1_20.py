@@ -42,11 +42,9 @@ def add(x,y):
 def dot(w,data):
       temp=0
       speed=0.5
-      #w0=-1 #   +(-threshold)*x0  if x0=1, threshold=1
       for i in range(5):
         temp=temp+w[i]*data[i]*speed
         i+=1
-      #temp+=w0
       return temp   
 
 def getErrorRate(w,dataList):
@@ -58,7 +56,7 @@ def getErrorRate(w,dataList):
         compute=sign(dot(w,data[0]))
         if fact != compute:
             error+=1
-    return error/n
+    return float(error)/n
 
 def pocket_pla(dataList,normalW,pocketW,Finish):
      itertion=1#修正錯誤次數
