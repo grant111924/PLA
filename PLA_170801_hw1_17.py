@@ -28,25 +28,6 @@ def sign(t):
         return 1
     else:
         return -1
-def mui(error,data):
-    tmpData=[]
-    for i in range(5):
-        tmpData.append(error*data[i])
-        i+=1
-    return tmpData   
-def add(x,y):
-    for i in range(5):
-        x[i]=x[i]+y[i]
-        i+=1
-def dot(w,data):
-      temp=0
-      speed=0.5
-      #w0=-1 #   +(-threshold)*x0  if x0=1, threshold=1
-      for i in range(5):
-        temp=temp+w[i]*data[i]*speed
-        i+=1
-      #temp+=w0
-      return temp   
    
 def naive_pla(dataList):
      Finish=False
@@ -54,18 +35,17 @@ def naive_pla(dataList):
      itertion=0#修正錯誤次數
      index=0 # 計算到第幾個樣本
      correctNum=0 #當前正確樣本數
+     speed=0.5 #學習速度
      while Finish!=True:
          data=dataList[index] 
          fact=data[1]
-         compute=sign(dot(w,data[0]))
-         #print('fact %d compute %d'%(fact,compute))
+         compute=sign(np.dot(np.asarray(w,dtype=float)*speed,data[0]))
          if fact == compute:
             correctNum+=1
          else:
-             add(w,mui(fact,data[0]))
+             w=w+np.multiply(fact,data[0])  #w(t+1)=w(t)+y(t)*x(t)
              correctNum=0
              itertion+=1
-             print("iterion %d" %(itertion))
              
          if index==len(dataList)-1:
               index=0
@@ -84,8 +64,6 @@ def main():
     dataList=[]
     fileName="hw1_15_train.txt"
     openFile(fileName,dataList)
-    print(len(dataList))
-    print(dataList)
     totalStep=0
     for i in range(2000):
         np.random.shuffle(dataList)# 隨機點開始 
